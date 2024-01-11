@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useCallback, useEffect } from "react";
+import React, { useCallback, useEffect, useContext } from "react";
 import { io } from "socket.io-client";
 
 interface SocketProviderProps{
@@ -12,6 +12,16 @@ interface SocketContextInterface {
 }
 
 const SocketContext = React.createContext<SocketContextInterface| null> (null);
+
+// custom useSocket Hook
+export const useSocket = () =>{
+    const state = useContext(SocketContext);
+
+    if(!state){
+        throw new Error('State is not defined');
+    }
+    return state;
+}
 
 export const SocketProvider: React.FC<SocketProviderProps> = ({children}) =>{
 

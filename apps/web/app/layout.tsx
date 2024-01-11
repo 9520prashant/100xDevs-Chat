@@ -18,7 +18,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <SocketProvider>
-       <body className={inter.className}>{children}</body>
+       <body>{children}</body>
       </SocketProvider>
     </html>
   );
