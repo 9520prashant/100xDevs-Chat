@@ -6,7 +6,7 @@ import 'react-quill/dist/quill.snow.css';
 import { useSocket } from '../context/SocketProvider';
 
 const Chat = () => {
-  const {sendMessage} = useSocket();
+  const {sendMessage, messages} = useSocket();
   const [message, setMessage] = useState('');
   
     const handleChange = (content, delta, source, editor) => {
@@ -16,7 +16,13 @@ const Chat = () => {
   
     return (
       <section className='flex flex-col justify-between item-center h-[100vh] w-full'>
-          <h1 className='text-white'>jdbasjdbja</h1>
+          {
+              messages.map((msg, index)=>(
+                  <div key={index} className='bg-gray-900 text-white p-2 m-2 rounded'>
+                      {msg}
+                  </div>
+              ))
+          }
       <div className='text-white flex justify-evenly items-center p-4'>
         <div className='w-[90vw]'>
           <ReactQuill 
