@@ -20,5 +20,8 @@
   "packageManager": "yarn@1.22.19",
   "engines": {
     "node": ">=18"
+  },
+  "dependencies": {
+    "turbo-http": "^0.3.2"
   }
 }

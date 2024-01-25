@@ -1,4 +1,5 @@
 import {Server} from "socket.io"
+import prismaClient from "./prisma";
 import Radis from "ioredis";
 
 const pub = new Radis({
@@ -41,10 +42,15 @@ class SocketService {
             })
         });
 
-        sub.on("message", (channel, message)=>{
+        sub.on("message", async (channel, message)=>{
             if(channel === "MESSAGES"){
                 console.log("New Message Published", message);
                 io.emit("message", message);
+                await prismaClient.message.create({
+                    data:{
+                        text:message,
+                    }
+                })
             }
          }
         )
