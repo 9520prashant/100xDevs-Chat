@@ -1,6 +1,8 @@
 import {Server} from "socket.io"
 import prismaClient from "./prisma";
 import Radis from "ioredis";
+import {produceMessage} from "./kafka"
+
 
 const pub = new Radis({
     port: 19388,
@@ -46,11 +48,9 @@ class SocketService {
             if(channel === "MESSAGES"){
                 console.log("New Message Published", message);
                 io.emit("message", message);
-                await prismaClient.message.create({
-                    data:{
-                        text:message,
-                    }
-                })
+                // producing message to kafka
+                await produceMessage(message);
+                console.log("Message Produced to Kafka");
             }
          }
         )
